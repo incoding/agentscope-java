@@ -16,7 +16,7 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.hook.Hook;
 import io.agentscope.core.hook.HookEvent;
 import io.agentscope.core.hook.PostActingEvent;
@@ -31,7 +31,7 @@ import io.agentscope.core.message.TextBlock;
 import io.agentscope.core.message.ToolResultBlock;
 import io.agentscope.core.message.URLSource;
 import io.agentscope.core.message.VideoBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.core.tool.multimodal.DashScopeMultiModalTool;
 import java.util.List;
@@ -49,12 +49,14 @@ public class MultiModalToolExample {
                 "This example demonstrates how to equip an Agent with multimodal tools.\n"
                         + "The agent has image, audio and video multimodal tools.");
 
-        // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        // Get API keys: DashScope for multimodal tools, Moonshot for chat model
+        String dashScopeApiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         // Create and register tools
         Toolkit toolkit = new Toolkit();
-        toolkit.registerTool(new DashScopeMultiModalTool(apiKey));
+        toolkit.registerTool(new DashScopeMultiModalTool(dashScopeApiKey));
         printRegisterTools();
 
         // Create Agent with tools
@@ -67,12 +69,12 @@ public class MultiModalToolExample {
                                         + " accurately. Always explain what you're doing when using"
                                         + " tools.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .hook(new ToolCallLoggingHook())
                         .toolkit(toolkit)

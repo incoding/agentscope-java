@@ -16,9 +16,9 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.core.tool.mcp.McpClientBuilder;
 import io.agentscope.core.tool.mcp.McpClientWrapper;
@@ -42,7 +42,8 @@ public class McpToolExample {
                         + " databases, etc.");
 
         // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         // Interactive MCP configuration
         McpClientWrapper mcpClient = configureMcp();
@@ -62,12 +63,12 @@ public class McpToolExample {
                                         + "Use the available tools to help users with their"
                                         + " requests.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(toolkit)
                         .memory(new InMemoryMemory())

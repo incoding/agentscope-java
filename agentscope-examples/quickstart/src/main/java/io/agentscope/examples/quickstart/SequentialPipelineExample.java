@@ -16,12 +16,12 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.pipeline.SequentialPipeline;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.examples.quickstart.util.MsgUtils;
@@ -55,7 +55,8 @@ public class SequentialPipelineExample {
                         + "Watch how each agent's output becomes the next agent's input!");
 
         // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         System.out.println("Setting up the pipeline...\n");
 
@@ -136,10 +137,12 @@ public class SequentialPipelineExample {
                                 + "Preserve the original meaning and tone. "
                                 + "Only output the translated text, no explanations.")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .enableThinking(false)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder()
+                                .apiKey(apiKey)
+                                .modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .memory(new InMemoryMemory())
                 .toolkit(new Toolkit())
@@ -156,10 +159,12 @@ public class SequentialPipelineExample {
                                 + "Keep the summary in the same language as the input. "
                                 + "Only output the summary, no additional comments.")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .enableThinking(false)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder()
+                                .apiKey(apiKey)
+                                .modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .memory(new InMemoryMemory())
                 .toolkit(new Toolkit())
@@ -178,10 +183,12 @@ public class SequentialPipelineExample {
                             + "Reasoning: [explanation]\n"
                             + "Summary: [repeat the input text]")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .enableThinking(false)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder()
+                                .apiKey(apiKey)
+                                .modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .memory(new InMemoryMemory())
                 .toolkit(new Toolkit())

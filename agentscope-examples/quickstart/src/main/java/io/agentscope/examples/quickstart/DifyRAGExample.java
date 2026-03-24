@@ -18,7 +18,7 @@ package io.agentscope.examples.quickstart;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.user.UserAgent;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.RAGMode;
 import io.agentscope.core.rag.integration.dify.DifyKnowledge;
 import io.agentscope.core.rag.integration.dify.DifyRAGConfig;
@@ -33,7 +33,8 @@ public class DifyRAGExample {
         String difyApiKey = System.getenv("DIFY_RAG_API_KEY");
         String difyBaseUrl = System.getenv("DIFY_API_BASE_URL");
         String datasetId = System.getenv("DIFY_DATASET_ID");
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         if (difyApiKey == null || difyBaseUrl == null || datasetId == null) {
             System.err.println("Error: Required environment variables not set.");
@@ -48,9 +49,10 @@ public class DifyRAGExample {
                 ReActAgent.builder()
                         .name("KnowledgeAssistant")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .build())
                         .knowledge(
                                 DifyKnowledge.builder()

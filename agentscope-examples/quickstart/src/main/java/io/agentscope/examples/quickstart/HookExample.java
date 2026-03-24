@@ -16,7 +16,7 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.hook.ActingChunkEvent;
 import io.agentscope.core.hook.Hook;
 import io.agentscope.core.hook.HookEvent;
@@ -28,7 +28,7 @@ import io.agentscope.core.hook.ReasoningChunkEvent;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.ToolResultBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Tool;
 import io.agentscope.core.tool.ToolEmitter;
 import io.agentscope.core.tool.ToolParam;
@@ -51,7 +51,8 @@ public class HookExample {
                         + " tool calls.");
 
         // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         // Create monitoring hook
         Hook monitoringHook = new MonitoringHook();
@@ -71,12 +72,12 @@ public class HookExample {
                                 "You are a helpful assistant. When processing data, use the"
                                         + " process_data tool.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(true)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(toolkit)
                         .memory(new InMemoryMemory())

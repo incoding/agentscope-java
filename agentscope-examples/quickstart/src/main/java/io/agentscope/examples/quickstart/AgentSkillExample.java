@@ -16,9 +16,9 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.skill.AgentSkill;
 import io.agentscope.core.skill.SkillBox;
 import io.agentscope.core.skill.repository.FileSystemSkillRepository;
@@ -56,7 +56,8 @@ public class AgentSkillExample {
                         + "  - Use file tools to create a new skill\n"
                         + "  - Write SKILL.md and references under a target folder");
 
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
         Toolkit toolkit = new Toolkit();
         SkillBox skillBox = new SkillBox(toolkit);
@@ -89,12 +90,12 @@ public class AgentSkillExample {
                         .name("SkillCreator")
                         .sysPrompt(buildSystemPrompt(outputDir))
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(true)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(toolkit)
                         .skillBox(skillBox)

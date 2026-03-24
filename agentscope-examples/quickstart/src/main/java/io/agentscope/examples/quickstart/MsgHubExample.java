@@ -16,12 +16,12 @@
 package io.agentscope.examples.quickstart;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeMultiAgentFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.pipeline.MsgHub;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.examples.quickstart.util.MsgUtils;
@@ -39,14 +39,16 @@ public class MsgHubExample {
                     + "MsgHub automatically broadcasts each student's message to the others.");
 
         // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
-        // Create shared model with MultiAgentFormatter
-        DashScopeChatModel model =
-                DashScopeChatModel.builder()
+        // Create shared model with OpenAIChatFormatter
+        OpenAIChatModel model =
+                OpenAIChatModel.builder()
                         .apiKey(apiKey)
-                        .modelName("qwen-plus")
-                        .formatter(new DashScopeMultiAgentFormatter())
+                        .modelName("kimi-k2.5")
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .formatter(new OpenAIChatFormatter())
                         .build();
 
         System.out.println("\n=== Creating Three Student Agents ===\n");

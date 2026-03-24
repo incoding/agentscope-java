@@ -19,7 +19,7 @@ import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.EventType;
 import io.agentscope.core.agent.StreamOptions;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.session.JsonSession;
 import io.agentscope.core.session.Session;
 import io.agentscope.examples.quickstart.util.MsgUtils;
@@ -54,13 +54,13 @@ public class StreamingWebExample {
         @Override
         public void afterPropertiesSet() throws Exception {
             // Get API key from environment
-            apiKey = System.getenv("DASHSCOPE_API_KEY");
+            apiKey = System.getenv("MOONSHOT_API_KEY");
             if (apiKey == null || apiKey.isEmpty()) {
                 System.err.println(
-                        "Error: DASHSCOPE_API_KEY environment variable not set. Please set it"
+                        "Error: MOONSHOT_API_KEY environment variable not set. Please set it"
                                 + " before starting.");
                 throw new IllegalStateException(
-                        "DASHSCOPE_API_KEY environment variable is required");
+                        "MOONSHOT_API_KEY environment variable is required");
             }
 
             // Set up session path (now using SessionLoader pattern)
@@ -97,9 +97,10 @@ public class StreamingWebExample {
                     ReActAgent.builder()
                             .name("WebAgent")
                             .model(
-                                    DashScopeChatModel.builder()
+                                    OpenAIChatModel.builder()
                                             .apiKey(apiKey)
-                                            .modelName("qwen-plus")
+                                            .modelName("kimi-k2.5")
+                                            .baseUrl("https://api.moonshot.cn/v1")
                                             .stream(true)
                                             .build())
                             .build();

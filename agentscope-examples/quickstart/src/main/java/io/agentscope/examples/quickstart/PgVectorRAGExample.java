@@ -18,9 +18,9 @@ package io.agentscope.examples.quickstart;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.embedding.EmbeddingModel;
 import io.agentscope.core.embedding.dashscope.DashScopeTextEmbedding;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.Knowledge;
 import io.agentscope.core.rag.RAGMode;
 import io.agentscope.core.rag.knowledge.SimpleKnowledge;
@@ -66,8 +66,10 @@ public class PgVectorRAGExample {
                         + "  - PostgreSQL pgvector for vector storage\n"
                         + "  - Adding documents and Q&A with knowledge base");
 
-        // Get configuration from environment
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        // Get API keys: DashScope for embedding, Moonshot for chat model
+        String dashScopeApiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getApiKey(
+                "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
         String pgHost = getEnvOrDefault("PG_HOST", "localhost");
         String pgPort = getEnvOrDefault("PG_PORT", "5432");
         String pgDatabase = getEnvOrDefault("PG_DATABASE", "vectordb");
@@ -88,7 +90,7 @@ public class PgVectorRAGExample {
         System.out.println("Creating DashScope embedding model...");
         EmbeddingModel embeddingModel =
                 DashScopeTextEmbedding.builder()
-                        .apiKey(apiKey)
+                        .apiKey(dashScopeApiKey)
                         .modelName("text-embedding-v3")
                         .dimensions(EMBEDDING_DIMENSIONS)
                         .build();
@@ -193,12 +195,12 @@ public class PgVectorRAGExample {
                                         + "使用retrieve_knowledge工具从知识库中检索相关信息，然后基于检索到的内容给出准确的回答。"
                                         + "如果知识库中没有相关信息，请诚实地告知用户。")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .memory(new InMemoryMemory())
                         .toolkit(new Toolkit())
