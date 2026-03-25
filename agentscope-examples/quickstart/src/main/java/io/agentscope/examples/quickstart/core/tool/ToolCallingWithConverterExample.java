@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.core.tool;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -33,6 +33,8 @@ import io.agentscope.core.tool.ToolParam;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.core.util.JsonSchemaUtils;
 import io.agentscope.core.util.JsonUtils;
+import io.agentscope.examples.quickstart.ExampleUtils;
+
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.Arrays;

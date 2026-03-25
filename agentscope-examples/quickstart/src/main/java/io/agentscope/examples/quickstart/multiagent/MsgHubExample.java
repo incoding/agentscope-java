@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.multiagent;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
@@ -24,6 +24,7 @@ import io.agentscope.core.message.TextBlock;
 import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.pipeline.MsgHub;
 import io.agentscope.core.tool.Toolkit;
+import io.agentscope.examples.quickstart.ExampleUtils;
 import io.agentscope.examples.quickstart.util.MsgUtils;
 
 /**

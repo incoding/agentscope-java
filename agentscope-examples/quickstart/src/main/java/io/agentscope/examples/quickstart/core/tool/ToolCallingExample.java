@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.core.tool;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
@@ -22,6 +22,8 @@ import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Tool;
 import io.agentscope.core.tool.ToolParam;
 import io.agentscope.core.tool.Toolkit;
+import io.agentscope.examples.quickstart.ExampleUtils;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

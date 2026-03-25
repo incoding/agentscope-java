@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.multimodal;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.hook.TTSHook;

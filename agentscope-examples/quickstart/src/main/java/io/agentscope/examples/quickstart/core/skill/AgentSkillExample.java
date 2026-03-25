@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.core.skill;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
@@ -24,6 +24,8 @@ import io.agentscope.core.skill.SkillBox;
 import io.agentscope.core.skill.repository.FileSystemSkillRepository;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.core.tool.coding.ShellCommandTool;
+import io.agentscope.examples.quickstart.ExampleUtils;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;

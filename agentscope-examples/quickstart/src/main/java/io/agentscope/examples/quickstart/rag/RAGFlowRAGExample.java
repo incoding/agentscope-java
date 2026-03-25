@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.rag;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.user.UserAgent;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.RAGMode;
-import io.agentscope.core.rag.integration.dify.DifyKnowledge;
-import io.agentscope.core.rag.integration.dify.DifyRAGConfig;
+import io.agentscope.core.rag.integration.ragflow.RAGFlowConfig;
+import io.agentscope.core.rag.integration.ragflow.RAGFlowKnowledge;
+import io.agentscope.examples.quickstart.ExampleUtils;
 
 /**
- * Example demonstrating how to use Dify Knowledge Base for RAG.
+ * Example demonstrating how to use RAGFlow Knowledge Base for RAG.
  */
-public class DifyRAGExample {
+public class RAGFlowRAGExample {
 
     public static void main(String[] args) throws Exception {
         // Check environment variables
-        String difyApiKey = System.getenv("DIFY_RAG_API_KEY");
-        String difyBaseUrl = System.getenv("DIFY_API_BASE_URL");
-        String datasetId = System.getenv("DIFY_DATASET_ID");
+        String ragflowApiKey = System.getenv("RAGFLOW_API_KEY");
+        String ragflowBaseUrl = System.getenv("RAGFLOW_BASE_URL");
+        String datasetId = System.getenv("RAGFLOW_DATASET_ID");
         String apiKey = ExampleUtils.getApiKey(
                 "MOONSHOT_API_KEY", "Moonshot", "https://platform.moonshot.cn");
 
-        if (difyApiKey == null || difyBaseUrl == null || datasetId == null) {
+        if (ragflowApiKey == null || ragflowBaseUrl == null || datasetId == null) {
             System.err.println("Error: Required environment variables not set.");
             System.err.println("Please set the following environment variables:");
-            System.err.println("  - DIFY_RAG_API_KEY");
-            System.err.println("  - DIFY_API_BASE_URL");
-            System.err.println("  - DIFY_DATASET_ID");
+            System.err.println("  - RAGFLOW_API_KEY");
+            System.err.println("  - RAGFLOW_BASE_URL");
+            System.err.println("  - RAGFLOW_DATASET_ID");
             System.exit(1);
         }
 
@@ -55,12 +56,12 @@ public class DifyRAGExample {
                                         .baseUrl("https://api.moonshot.cn/v1")
                                         .build())
                         .knowledge(
-                                DifyKnowledge.builder()
+                                RAGFlowKnowledge.builder()
                                         .config(
-                                                DifyRAGConfig.builder()
-                                                        .apiKey(difyApiKey)
-                                                        .apiBaseUrl(difyBaseUrl)
-                                                        .datasetId(datasetId)
+                                                RAGFlowConfig.builder()
+                                                        .apiKey(ragflowApiKey)
+                                                        .baseUrl(ragflowBaseUrl)
+                                                        .addDatasetId(datasetId)
                                                         .build())
                                         .build())
                         .ragMode(RAGMode.AGENTIC)

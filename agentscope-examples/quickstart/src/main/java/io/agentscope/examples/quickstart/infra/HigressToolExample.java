@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.infra;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
+import io.agentscope.examples.quickstart.ExampleUtils;
 import io.agentscope.extensions.higress.HigressMcpClientBuilder;
 import io.agentscope.extensions.higress.HigressMcpClientWrapper;
 import io.agentscope.extensions.higress.HigressToolkit;

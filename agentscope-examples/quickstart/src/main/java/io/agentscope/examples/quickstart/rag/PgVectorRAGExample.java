@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.agentscope.examples.quickstart;
+package io.agentscope.examples.quickstart.rag;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.embedding.EmbeddingModel;
@@ -31,6 +31,8 @@ import io.agentscope.core.rag.reader.SplitStrategy;
 import io.agentscope.core.rag.reader.TextReader;
 import io.agentscope.core.rag.store.PgVectorStore;
 import io.agentscope.core.tool.Toolkit;
+import io.agentscope.examples.quickstart.ExampleUtils;
+
 import java.io.IOException;
 import java.util.List;
 
