@@ -25,12 +25,7 @@ import static io.agentscope.examples.werewolf.WerewolfGameConfig.WITCH_COUNT;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.AgentBase;
-import io.agentscope.core.formatter.dashscope.DashScopeMultiAgentFormatter;
-import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.message.Msg;
-import io.agentscope.core.message.MsgRole;
-import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+
 import io.agentscope.core.pipeline.FanoutPipeline;
 import io.agentscope.core.pipeline.MsgHub;
 import io.agentscope.core.tool.Toolkit;
@@ -68,7 +63,7 @@ public class WerewolfWebGame {
     private final LanguageConfig langConfig;
     private final WerewolfUtils utils;
 
-    private DashScopeChatModel model;
+    private OpenAIChatModel model;
     private GameState gameState;
 
     public WerewolfWebGame(GameEventEmitter emitter, LocalizationBundle bundle) {
@@ -86,12 +81,13 @@ public class WerewolfWebGame {
     public void start() throws Exception {
         emitter.emitSystemMessage(messages.getInitializingGame());
 
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         model =
-                DashScopeChatModel.builder()
+                OpenAIChatModel.builder()
                         .apiKey(apiKey)
                         .modelName(WerewolfGameConfig.DEFAULT_MODEL)
-                        .formatter(new DashScopeMultiAgentFormatter())
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .formatter(new OpenAIMultiAgentFormatter())
                         .stream(false)
                         .build();
 

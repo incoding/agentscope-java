@@ -35,6 +35,21 @@ public class ExampleUtils {
     private ExampleUtils() {}
 
     /**
+     * Gets the Moonshot API key from environment variable. Exits if not set.
+     *
+     * @return The API key
+     */
+    public static String getMoonshotApiKey() {
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
+        if (apiKey == null || apiKey.isEmpty()) {
+            System.err.println("Error: MOONSHOT_API_KEY environment variable not set.");
+            System.err.println("Please set it with: export MOONSHOT_API_KEY=your_api_key");
+            System.exit(1);
+        }
+        return apiKey;
+    }
+
+    /**
      * Gets the DashScope API key from environment variable. Exits if not set.
      *
      * @return The API key

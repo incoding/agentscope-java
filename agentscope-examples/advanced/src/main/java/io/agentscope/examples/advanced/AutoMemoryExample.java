@@ -17,7 +17,7 @@
 package io.agentscope.examples.advanced;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.LongTermMemoryMode;
 import io.agentscope.core.memory.autocontext.AutoContextConfig;
 import io.agentscope.core.memory.autocontext.AutoContextHook;
@@ -26,8 +26,7 @@ import io.agentscope.core.memory.mem0.Mem0LongTermMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
-import io.agentscope.core.model.GenerateOptions;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.session.JsonSession;
 import io.agentscope.core.session.Session;
 import io.agentscope.core.tool.Toolkit;
@@ -44,14 +43,13 @@ public class AutoMemoryExample {
 
     public static void main(String[] args) {
 
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getMoonshotApiKey();
 
-        DashScopeChatModel chatModel =
-                DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen3-max-preview").stream(
-                                true)
-                        .enableThinking(true)
-                        .formatter(new DashScopeChatFormatter())
-                        .defaultOptions(GenerateOptions.builder().thinkingBudget(1024).build())
+        OpenAIChatModel chatModel =
+                OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .stream(true)
+                        .formatter(new OpenAIChatFormatter())
                         .build();
 
         // goto https://app.mem0.ai/dashboard/settings?tab=api-keys to get a playground api key.

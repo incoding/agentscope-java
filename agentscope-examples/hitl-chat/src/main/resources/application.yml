@@ -19,11 +19,11 @@ spring:
   application:
     name: hitl-chat
 
-# DashScope API configuration
-# Set DASHSCOPE_API_KEY environment variable or configure here
-dashscope:
-  api-key: ${DASHSCOPE_API_KEY}
-  model-name: qwen-plus
+# Moonshot API configuration
+# Set MOONSHOT_API_KEY environment variable or configure here
+moonshot:
+  api-key: ${MOONSHOT_API_KEY}
+  model-name: kimi-k2.5
 
 # Logging
 logging:

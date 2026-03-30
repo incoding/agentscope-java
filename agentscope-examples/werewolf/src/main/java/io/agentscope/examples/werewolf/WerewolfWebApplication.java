@@ -27,9 +27,9 @@ public class WerewolfWebApplication {
 
     public static void main(String[] args) throws IOException {
         // Check API key
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
-            System.err.println("Error: DASHSCOPE_API_KEY environment variable not set.");
+            System.err.println("Error: MOONSHOT_API_KEY environment variable not set.");
             System.err.println("Please set it before starting the game.");
             System.exit(1);
         }

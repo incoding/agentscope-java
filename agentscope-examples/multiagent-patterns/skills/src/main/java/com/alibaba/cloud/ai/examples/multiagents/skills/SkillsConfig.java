@@ -17,7 +17,8 @@ package com.alibaba.cloud.ai.examples.multiagents.skills;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.skill.AgentSkill;
 import io.agentscope.core.skill.SkillBox;
 import io.agentscope.core.skill.repository.ClasspathSkillRepository;
@@ -72,11 +73,15 @@ public class SkillsConfig {
 
     @Bean("sqlAssistantAgent")
     public ReActAgent sqlAssistantAgent(Toolkit toolkit, SkillBox skillBox) {
-        String key = System.getenv("AI_DASHSCOPE_API_KEY");
+        String key = System.getenv("MOONSHOT_API_KEY");
         return ReActAgent.builder()
                 .name("sql_assistant")
                 .sysPrompt(SYSTEM_PROMPT)
-                .model(DashScopeChatModel.builder().apiKey(key).modelName("qwen-plus").build())
+                .model(OpenAIChatModel.builder().apiKey(key).modelName("kimi-k2.5")
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .stream(true)
+                        .formatter(new OpenAIChatFormatter())
+                        .build())
                 .toolkit(toolkit)
                 .skillBox(skillBox)
                 .memory(new InMemoryMemory())

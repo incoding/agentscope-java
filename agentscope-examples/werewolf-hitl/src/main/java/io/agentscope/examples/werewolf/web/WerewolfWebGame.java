@@ -21,15 +21,14 @@ import static io.agentscope.examples.werewolf.WerewolfGameConfig.MAX_ROUNDS;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.AgentBase;
 import io.agentscope.core.agent.user.UserAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeMultiAgentFormatter;
+import io.agentscope.core.formatter.openai.OpenAIMultiAgentFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Base64Source;
 import io.agentscope.core.message.MessageMetadataKeys;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
-import io.agentscope.core.model.GenerateOptions;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.model.StructuredOutputReminder;
 import io.agentscope.core.model.tts.DashScopeRealtimeTTSModel;
 import io.agentscope.core.model.tts.Qwen3TTSFlashVoice;
@@ -79,7 +78,7 @@ public class WerewolfWebGame {
     private final Role selectedHumanRole;
     private final GameConfiguration gameConfig;
 
-    private DashScopeChatModel model;
+    private OpenAIChatModel model;
     private GameState gameState;
     private Player humanPlayer;
     // Mapping from player name to assigned TTS voice (randomized per game)
@@ -134,14 +133,13 @@ public class WerewolfWebGame {
     public void start() throws Exception {
         emitter.emitSystemMessage(messages.getInitializingGame());
 
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         model =
-                DashScopeChatModel.builder()
+                OpenAIChatModel.builder()
                         .apiKey(apiKey)
-                        .enableThinking(true)
-                        .defaultOptions(GenerateOptions.builder().thinkingBudget(512).build())
                         .modelName(WerewolfGameConfig.DEFAULT_MODEL)
-                        .formatter(new DashScopeMultiAgentFormatter())
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .formatter(new OpenAIMultiAgentFormatter())
                         .stream(false)
                         .build();
 

@@ -15,8 +15,9 @@
  */
 package com.alibaba.cloud.ai.examples.multiagents.pipeline;
 
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.model.Model;
+import io.agentscope.core.model.OpenAIChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,7 +29,11 @@ public class PipelineModelConfig {
 
     @Bean
     public Model dashScopeChatModel() {
-        String key = System.getenv("AI_DASHSCOPE_API_KEY");
-        return DashScopeChatModel.builder().apiKey(key).modelName("qwen-plus").build();
+        String key = System.getenv("MOONSHOT_API_KEY");
+        return OpenAIChatModel.builder().apiKey(key).modelName("kimi-k2.5")
+                .baseUrl("https://api.moonshot.cn/v1")
+                .stream(true)
+                .formatter(new OpenAIChatFormatter())
+                .build();
     }
 }

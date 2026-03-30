@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Bean;
  *
  * <p><b>Usage:</b>
  * <ol>
- *   <li>Set the DASHSCOPE_API_KEY environment variable</li>
+ *   <li>Set the MOONSHOT_API_KEY environment variable</li>
  *   <li>Run this application</li>
  *   <li>Use curl: {@code curl -X GET http://localhost:8888/.well-known/agent-card.json} to get AgentCard.</li>
  *   <li>Use curl: {@code curl --location --request POST 'http://localhost:8888' \
@@ -65,7 +65,7 @@ import org.springframework.context.annotation.Bean;
  *
  * <p><b>Usage: </b>
  * <ol>
- *     <li>Set the DASHSCOPE_API_KEY environment variable.</li>
+ *     <li>Set the MOONSHOT_API_KEY environment variable.</li>
  *     <li>Enabled Nacos Registry by set Nacos environment variable: {@code NACOS_ENABLED=true}.</li>
  *     <li>Start Nacos Server according to <a href="https://nacos.io/en/docs/latest/quickstart/quick-start-docker">documents</a>.</li>
  *     <li>Set more Nacos environment variables: NACOS_SERVER_ADDR, NACOS_USERNAME and NACOS_PASSWORD if Nacos Server is not in local and enabled authentication.</li>

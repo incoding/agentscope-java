@@ -17,8 +17,9 @@ package io.agentscope.examples.supervisor;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.model.Model;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.examples.supervisor.tools.CalendarStubTools;
 import io.agentscope.examples.supervisor.tools.EmailStubTools;
@@ -63,9 +64,13 @@ public class SupervisorConfig {
             """;
 
     @Bean
-    public Model dashScopeChatModel(@Value("${spring.ai.dashscope.api-key:}") String apiKey) {
-        String key = StringUtils.hasText(apiKey) ? apiKey : System.getenv("AI_DASHSCOPE_API_KEY");
-        return DashScopeChatModel.builder().apiKey(key).modelName("qwen-plus").build();
+    public Model dashScopeChatModel(@Value("${moonshot.api-key:}") String apiKey) {
+        String key = StringUtils.hasText(apiKey) ? apiKey : System.getenv("MOONSHOT_API_KEY");
+        return OpenAIChatModel.builder().apiKey(key).modelName("kimi-k2.5")
+                .baseUrl("https://api.moonshot.cn/v1")
+                .stream(true)
+                .formatter(new OpenAIChatFormatter())
+                .build();
     }
 
     @Bean

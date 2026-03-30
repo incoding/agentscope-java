@@ -19,7 +19,7 @@ import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.Event;
 import io.agentscope.core.agent.EventType;
 import io.agentscope.core.agent.StreamOptions;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.hook.Hook;
 import io.agentscope.core.hook.HookEvent;
 import io.agentscope.core.hook.PostActingEvent;
@@ -28,7 +28,7 @@ import io.agentscope.core.message.GenerateReason;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.plan.PlanNotebook;
 import io.agentscope.core.tool.Toolkit;
 import java.util.List;
@@ -82,10 +82,10 @@ public class AgentService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        apiKey = System.getenv("DASHSCOPE_API_KEY");
+        apiKey = System.getenv("MOONSHOT_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
-            log.error("DASHSCOPE_API_KEY environment variable not set");
-            throw new IllegalStateException("DASHSCOPE_API_KEY environment variable is required");
+            log.error("MOONSHOT_API_KEY environment variable not set");
+            throw new IllegalStateException("MOONSHOT_API_KEY environment variable is required");
         }
 
         initializeAgent();
@@ -133,11 +133,12 @@ public class AgentService implements InitializingBean {
                                 "You are a systematic assistant that helps users complete complex"
                                         + " tasks through structured planning.\n")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen3-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .memory(memory)
                         .toolkit(toolkit)

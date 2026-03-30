@@ -23,8 +23,10 @@ spring:
 # AgentScope Configuration
 agentscope:
   # ReActAgent Configuration
-  dashscope:
-    api-key: ${DASHSCOPE_API_KEY}
+  openai:
+    api-key: ${MOONSHOT_API_KEY}
+    model-name: kimi-k2.5
+    base-url: https://api.moonshot.cn/v1
   agent:
     enabled: true
     name: agentscope-a2a-example-agent

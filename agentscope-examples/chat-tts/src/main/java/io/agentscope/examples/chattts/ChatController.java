@@ -23,7 +23,7 @@ import io.agentscope.core.message.Base64Source;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.model.tts.DashScopeRealtimeTTSModel;
 import java.util.Map;
 import org.springframework.http.MediaType;
@@ -52,7 +52,7 @@ import reactor.core.scheduler.Schedulers;
 @CrossOrigin(origins = "*")
 public class ChatController {
 
-    private final DashScopeChatModel chatModel;
+    private final OpenAIChatModel chatModel;
     private final String apiKey;
 
     /**
@@ -63,13 +63,14 @@ public class ChatController {
      * @throws IllegalStateException if DASHSCOPE_API_KEY is not set
      */
     public ChatController() {
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
-            throw new IllegalStateException("DASHSCOPE_API_KEY environment variable is required");
+            throw new IllegalStateException("MOONSHOT_API_KEY environment variable is required");
         }
 
         this.apiKey = apiKey;
-        this.chatModel = DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").build();
+        this.chatModel = OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                .baseUrl("https://api.moonshot.cn/v1").stream(true).build();
     }
 
     /**

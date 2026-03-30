@@ -27,8 +27,9 @@ import com.alibaba.cloud.ai.graph.state.strategy.AppendStrategy;
 import com.alibaba.cloud.ai.graph.state.strategy.ReplaceStrategy;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.model.Model;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.examples.subagent.tools.GlobSearchTool;
 import io.agentscope.examples.subagent.tools.GrepSearchTool;
@@ -99,8 +100,12 @@ public class SubagentConfig {
 
     @Bean
     public Model dashScopeChatModel() {
-        String key = System.getenv("AI_DASHSCOPE_API_KEY");
-        return DashScopeChatModel.builder().apiKey(key).modelName("qwen-plus").build();
+        String key = System.getenv("MOONSHOT_API_KEY");
+        return OpenAIChatModel.builder().apiKey(key).modelName("kimi-k2.5")
+                .baseUrl("https://api.moonshot.cn/v1")
+                .stream(true)
+                .formatter(new OpenAIChatFormatter())
+                .build();
     }
 
     @Bean

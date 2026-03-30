@@ -17,9 +17,9 @@ package io.agentscope.examples.agui.config;
 
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.Agent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Toolkit;
 import io.agentscope.examples.agui.tools.ExampleTools;
 import io.agentscope.spring.boot.agui.common.AguiAgentRegistryCustomizer;
@@ -90,10 +90,10 @@ public class AgentConfiguration {
                                 + "You can help users with various tasks including weather queries "
                                 + "and calculations. Be concise and helpful in your responses.")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .enableThinking(false)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .toolkit(toolkit)
                 .memory(new InMemoryMemory())
@@ -116,9 +116,10 @@ public class AgentConfiguration {
                                 + "Engage in natural conversation and help users "
                                 + "with general questions and discussions.")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .memory(new InMemoryMemory())
                 .maxIters(1)
@@ -142,9 +143,10 @@ public class AgentConfiguration {
                                 + "Use the calculate tool to perform mathematical operations. "
                                 + "Always show your work and explain the results.")
                 .model(
-                        DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-plus").stream(
-                                        true)
-                                .formatter(new DashScopeChatFormatter())
+                        OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                                .baseUrl("https://api.moonshot.cn/v1")
+                                .stream(true)
+                                .formatter(new OpenAIChatFormatter())
                                 .build())
                 .toolkit(toolkit)
                 .memory(new InMemoryMemory())
@@ -153,10 +155,10 @@ public class AgentConfiguration {
     }
 
     private String getRequiredApiKey() {
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
             throw new IllegalStateException(
-                    "DASHSCOPE_API_KEY environment variable is required. "
+                    "MOONSHOT_API_KEY environment variable is required. "
                             + "Please set it before starting the application.");
         }
         return apiKey;

@@ -20,7 +20,7 @@ import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.examples.compression.extra.CompressingOkHttpTransport;
 import io.agentscope.examples.compression.extra.CompressionConfig;
 import io.agentscope.examples.compression.extra.CompressionEncoding;
@@ -87,16 +87,16 @@ public class CompressionDemo {
                 CompressingOkHttpTransport.builder().compressionConfig(compressionConfig).build();
 
         // 3. Create Model with CompressingTransport
-        DashScopeChatModel model =
-                DashScopeChatModel.builder()
-                        .apiKey(System.getenv("DASHSCOPE_API_KEY"))
+        OpenAIChatModel model =
+                OpenAIChatModel.builder()
+                        .apiKey(System.getenv("MOONSHOT_API_KEY"))
                         // Please ensure that your server supports message compression and
                         // decompression.
                         // If it doesn't, you can use a proxy that supports message compression and
                         // decompression,
                         // such as a gateway service.
-                        .baseUrl(System.getenv("DASHSCOPE_BASE_URL"))
-                        .modelName("qwen-max")
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .modelName("kimi-k2.5")
                         .httpTransport(transport) // use compressing transport
                         .build();
 

@@ -20,14 +20,15 @@ logging:
     io.agentscope: INFO
 
 agentscope:
-  # Choose model provider - here we use DashScope as an example.
+  # Choose model provider - here we use OpenAI-compatible Kimi as an example.
   model:
-    provider: dashscope
+    provider: openai
 
-  dashscope:
+  openai:
     enabled: true
-    api-key: ${DASHSCOPE_API_KEY:YOUR_DASHSCOPE_API_KEY_HERE}
-    model-name: qwen3-max
+    api-key: ${MOONSHOT_API_KEY:YOUR_MOONSHOT_API_KEY_HERE}
+    model-name: kimi-k2.5
+    base-url: https://api.moonshot.cn/v1
     stream: true
 
   agent:

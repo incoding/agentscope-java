@@ -36,7 +36,7 @@ public class WerewolfGameConfig {
     public static final int MAX_DISCUSSION_ROUNDS = 2;
 
     // Model configuration
-    public static final String DEFAULT_MODEL = "qwen-plus";
+    public static final String DEFAULT_MODEL = "kimi-k2.5";
 
     private WerewolfGameConfig() {
         // Utility class

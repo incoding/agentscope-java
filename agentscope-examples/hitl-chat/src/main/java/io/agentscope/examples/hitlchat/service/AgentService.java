@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.Event;
 import io.agentscope.core.agent.StreamOptions;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.ContentBlock;
 import io.agentscope.core.message.Msg;
@@ -28,7 +28,7 @@ import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
 import io.agentscope.core.message.ToolResultBlock;
 import io.agentscope.core.message.ToolUseBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.session.InMemorySession;
 import io.agentscope.core.session.Session;
 import io.agentscope.core.state.SessionKey;
@@ -63,10 +63,10 @@ public class AgentService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    @Value("${dashscope.api-key:${DASHSCOPE_API_KEY:}}")
+    @Value("${moonshot.api-key:${MOONSHOT_API_KEY:}}")
     private String apiKey;
 
-    @Value("${dashscope.model-name:qwen-plus}")
+    @Value("${moonshot.model-name:kimi-k2.5}")
     private String modelName;
 
     private final McpService mcpService;
@@ -118,12 +118,12 @@ public class AgentService {
                                 "You are a helpful assistant with access to various tools. "
                                         + "Use tools when appropriate to help the user.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
                                         .modelName(modelName)
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(sessionToolkit)
                         .memory(new InMemoryMemory())

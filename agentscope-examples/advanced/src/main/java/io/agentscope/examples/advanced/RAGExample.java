@@ -18,9 +18,9 @@ package io.agentscope.examples.advanced;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.embedding.EmbeddingModel;
 import io.agentscope.core.embedding.dashscope.DashScopeTextEmbedding;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.Knowledge;
 import io.agentscope.core.rag.RAGMode;
 import io.agentscope.core.rag.knowledge.SimpleKnowledge;
@@ -51,14 +51,15 @@ public class RAGExample {
                         + "  - Generic mode: Automatic knowledge injection\n"
                         + "  - Agentic mode: Agent-controlled knowledge retrieval");
 
-        // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        // Get API keys
+        String chatApiKey = ExampleUtils.getMoonshotApiKey();
+        String embeddingApiKey = ExampleUtils.getDashScopeApiKey();
 
         // Create embedding model
         System.out.println("Creating embedding model...");
         EmbeddingModel embeddingModel =
                 DashScopeTextEmbedding.builder()
-                        .apiKey(apiKey)
+                        .apiKey(embeddingApiKey)
                         .modelName("text-embedding-v3")
                         .dimensions(EMBEDDING_DIMENSIONS)
                         .build();
@@ -89,7 +90,7 @@ public class RAGExample {
                 "In Agentic mode, the agent decides when to retrieve knowledge\n"
                         + "using the retrieve_knowledge tool. This gives the agent more\n"
                         + "control over when to use knowledge.\n");
-        demonstrateAgenticMode(apiKey, knowledge);
+        demonstrateAgenticMode(chatApiKey, knowledge);
 
         System.out.println("\n=== All examples completed ===");
     }
@@ -163,12 +164,12 @@ public class RAGExample {
                                     + " the knowledge doesn't contain relevant information, say so"
                                     + " clearly.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .memory(new InMemoryMemory())
                         .toolkit(new Toolkit())
@@ -206,12 +207,12 @@ public class RAGExample {
                                     + " use the retrieve_knowledge tool. Always explain what you're"
                                     + " doing.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(new Toolkit())
                         .memory(new InMemoryMemory())
