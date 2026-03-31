@@ -26,6 +26,12 @@ import static io.agentscope.examples.werewolf.WerewolfGameConfig.WITCH_COUNT;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.AgentBase;
 
+import io.agentscope.core.formatter.openai.OpenAIMultiAgentFormatter;
+import io.agentscope.core.memory.InMemoryMemory;
+import io.agentscope.core.message.Msg;
+import io.agentscope.core.message.MsgRole;
+import io.agentscope.core.message.TextBlock;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.pipeline.FanoutPipeline;
 import io.agentscope.core.pipeline.MsgHub;
 import io.agentscope.core.tool.Toolkit;
@@ -251,12 +257,12 @@ public class WerewolfWebGame {
                             .role(MsgRole.USER)
                             .content(
                                     TextBlock.builder()
-                                            .text(
+                                             .text(
                                                     messages.getSystemWerewolfKillResult(
                                                             killedPlayer != null
                                                                     ? killedPlayer.getName()
                                                                     : null))
-                                            .build())
+                                             .build())
                             .build());
             werewolfHub.broadcast(broadcastMsgs).block();
 

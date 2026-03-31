@@ -16,11 +16,11 @@
 package io.agentscope.examples.advanced;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tracing.TracerRegistry;
 import io.agentscope.core.tracing.telemetry.TelemetryTracer;
 import java.util.Base64;
@@ -42,7 +42,7 @@ import java.util.Scanner;
  *   <li>Set LANGFUSE_PUBLIC_KEY environment variable</li>
  *   <li>Set LANGFUSE_SECRET_KEY environment variable</li>
  *   <li>Set LANGFUSE_ENDPOINT environment variable (optional, defaults to US region)</li>
- *   <li>Set DASHSCOPE_API_KEY environment variable (or your preferred model API key)</li>
+ *   <li>Set MOONSHOT_API_KEY environment variable</li>
  * </ul>
  *
  * <p>After running, visit <a href="https://cloud.langfuse.com">Langfuse Console</a>
@@ -58,7 +58,7 @@ public class LangfuseExample {
 
     public static void main(String[] args) {
         // Get API keys and configuration
-        String dashScopeApiKey = ExampleUtils.getDashScopeApiKey();
+        String dashScopeApiKey = ExampleUtils.getMoonshotApiKey();
         String langfusePublicKey = getLangfusePublicKey();
         String langfuseSecretKey = getLangfuseSecretKey();
         String langfuseEndpoint = getLangfuseEndpoint();
@@ -79,10 +79,11 @@ public class LangfuseExample {
                                 "You are a helpful AI assistant. Be concise and informative in your"
                                         + " responses.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(dashScopeApiKey)
-                                        .modelName("qwen-plus")
-                                        .formatter(new DashScopeChatFormatter())
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .build();
         System.out.println("Agent created\n");

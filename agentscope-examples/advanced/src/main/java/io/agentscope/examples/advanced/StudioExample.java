@@ -16,9 +16,9 @@
 package io.agentscope.examples.advanced;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.studio.StudioManager;
 import io.agentscope.core.studio.StudioUserAgent;
 
@@ -29,7 +29,7 @@ public class StudioExample {
 
     public static void main(String[] args) throws Exception {
         // Get API key
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getMoonshotApiKey();
 
         System.out.println("Starting Studio Example...\n");
 
@@ -50,10 +50,11 @@ public class StudioExample {
                         .name("Assistant")
                         .sysPrompt("You are a helpful AI assistant.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
-                                        .formatter(new DashScopeChatFormatter())
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .build();
         System.out.println("Agent created\n");

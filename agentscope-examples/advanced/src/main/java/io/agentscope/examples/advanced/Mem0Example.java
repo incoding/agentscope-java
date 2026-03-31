@@ -21,7 +21,8 @@ import io.agentscope.core.memory.LongTermMemoryMode;
 import io.agentscope.core.memory.mem0.Mem0ApiType;
 import io.agentscope.core.memory.mem0.Mem0LongTermMemory;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
+import io.agentscope.core.model.OpenAIChatModel;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class Mem0Example {
 
     public static void main(String[] args) throws Exception {
         // Get API keys
-        String dashscopeApiKey = ExampleUtils.getDashScopeApiKey();
+        String dashscopeApiKey = ExampleUtils.getMoonshotApiKey();
         String mem0BaseUrl = getMem0BaseUrl();
         Mem0ApiType mem0ApiType = getMem0ApiType();
         Map<String, Object> metadata = new HashMap<>();
@@ -53,9 +54,11 @@ public class Mem0Example {
                 ReActAgent.builder()
                         .name("Assistant")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(dashscopeApiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .longTermMemory(longTermMemory)
                         .longTermMemoryMode(LongTermMemoryMode.STATIC_CONTROL)

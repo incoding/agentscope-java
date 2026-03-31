@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.Event;
 import io.agentscope.core.agent.StreamOptions;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.GenerateReason;
 import io.agentscope.core.message.Msg;
@@ -28,7 +28,7 @@ import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
 import io.agentscope.core.message.ToolResultBlock;
 import io.agentscope.core.message.ToolUseBlock;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.session.InMemorySession;
 import io.agentscope.core.session.Session;
 import io.agentscope.core.state.SimpleSessionKey;
@@ -71,7 +71,7 @@ import reactor.core.publisher.Flux;
  *
  * <h2>Running</h2>
  * <pre>
- * export DASHSCOPE_API_KEY=your_api_key
+ * export MOONSHOT_API_KEY=your_api_key
  * java -cp ... io.agentscope.examples.advanced.hitl.HitlInteractionExample
  * </pre>
  * Then open http://localhost:8080/hitl-interaction/index.html
@@ -117,27 +117,28 @@ public class HitlInteractionExample {
 
     private final Toolkit toolkit;
 
-    private final DashScopeChatModel model;
+    private final OpenAIChatModel model;
 
     {
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
 
         toolkit = new Toolkit();
         toolkit.registerTool(new UserInteractionTool());
         toolkit.registerTool(new AddCalendarEventTool());
 
         model =
-                DashScopeChatModel.builder().apiKey(apiKey).modelName("qwen-max").stream(true)
-                        .enableThinking(false)
-                        .formatter(new DashScopeChatFormatter())
+                OpenAIChatModel.builder().apiKey(apiKey).modelName("kimi-k2.5")
+                        .baseUrl("https://api.moonshot.cn/v1")
+                        .stream(true)
+                        .formatter(new OpenAIChatFormatter())
                         .build();
     }
 
     public static void main(String[] args) {
-        String apiKey = System.getenv("DASHSCOPE_API_KEY");
+        String apiKey = System.getenv("MOONSHOT_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
-            System.err.println("Error: DASHSCOPE_API_KEY environment variable not set.");
-            System.err.println("Please set it with: export DASHSCOPE_API_KEY=your_api_key");
+            System.err.println("Error: MOONSHOT_API_KEY environment variable not set.");
+            System.err.println("Please set it with: export MOONSHOT_API_KEY=your_api_key");
             System.exit(1);
         }
 

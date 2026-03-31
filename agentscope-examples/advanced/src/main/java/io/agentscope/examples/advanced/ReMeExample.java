@@ -20,7 +20,8 @@ import io.agentscope.core.agent.user.UserAgent;
 import io.agentscope.core.memory.LongTermMemoryMode;
 import io.agentscope.core.memory.reme.ReMeLongTermMemory;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
+import io.agentscope.core.model.OpenAIChatModel;
 
 /**
  * ReMeExample - Demonstrates long-term memory using ReMe backend.
@@ -58,7 +59,7 @@ public class ReMeExample {
 
     public static void main(String[] args) throws Exception {
         // Get API keys
-        String dashscopeApiKey = ExampleUtils.getDashScopeApiKey();
+        String dashscopeApiKey = ExampleUtils.getMoonshotApiKey();
         String remeBaseUrl = getReMeBaseUrl();
 
         ReMeLongTermMemory longTermMemory =
@@ -69,9 +70,11 @@ public class ReMeExample {
                 ReActAgent.builder()
                         .name("Assistant")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(dashscopeApiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .longTermMemory(longTermMemory)
                         .longTermMemoryMode(LongTermMemoryMode.STATIC_CONTROL)

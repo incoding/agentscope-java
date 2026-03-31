@@ -16,13 +16,12 @@
 package io.agentscope.examples.advanced;
 
 import io.agentscope.core.ReActAgent;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
 import io.agentscope.core.message.Msg;
 import io.agentscope.core.message.MsgRole;
 import io.agentscope.core.message.TextBlock;
-import io.agentscope.core.model.DashScopeChatModel;
-import io.agentscope.core.model.GenerateOptions;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.tool.Tool;
 import io.agentscope.core.tool.ToolParam;
 import io.agentscope.core.tool.Toolkit;
@@ -40,16 +39,12 @@ public class RoutingByToolCallsExample {
                                 "You're a routing agent. Your target is to route the user query to"
                                         + " the right follow-up task.")
                         .model(
-                                DashScopeChatModel.builder()
-                                        .apiKey(ExampleUtils.getDashScopeApiKey())
-                                        .modelName("qwen-max")
+                                OpenAIChatModel.builder()
+                                        .apiKey(ExampleUtils.getMoonshotApiKey())
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(true)
-                                        .formatter(new DashScopeChatFormatter())
-                                        .defaultOptions(
-                                                GenerateOptions.builder()
-                                                        .thinkingBudget(512)
-                                                        .build())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .memory(new InMemoryMemory())
                         .toolkit(toolkit)
@@ -90,7 +85,7 @@ public class RoutingByToolCallsExample {
                 @ToolParam(name = "demand", description = "The demand for the Python code")
                         String demand) {
             System.out.println("I am PythonAgent,now generating Python code for demand: " + demand);
-            String apiKey = ExampleUtils.getDashScopeApiKey();
+            String apiKey = ExampleUtils.getMoonshotApiKey();
             ReActAgent agent =
                     ReActAgent.builder()
                             .name("PythonAgent")
@@ -98,16 +93,12 @@ public class RoutingByToolCallsExample {
                                     "You're a Python expert, your target is to generate Python code"
                                             + " based on the demand.")
                             .model(
-                                    DashScopeChatModel.builder()
+                                    OpenAIChatModel.builder()
                                             .apiKey(apiKey)
-                                            .modelName("qwen-max")
+                                            .modelName("kimi-k2.5")
+                                            .baseUrl("https://api.moonshot.cn/v1")
                                             .stream(true)
-                                            .enableThinking(true)
-                                            .formatter(new DashScopeChatFormatter())
-                                            .defaultOptions(
-                                                    GenerateOptions.builder()
-                                                            .thinkingBudget(1024)
-                                                            .build())
+                                            .formatter(new OpenAIChatFormatter())
                                             .build())
                             .memory(new InMemoryMemory())
                             .toolkit(new Toolkit())
@@ -131,7 +122,7 @@ public class RoutingByToolCallsExample {
                 @ToolParam(name = "demand", description = "The demand for the poem")
                         String demand) {
             System.out.println("I am PoemAgent,now generating a poem for demand: " + demand);
-            String apiKey = ExampleUtils.getDashScopeApiKey();
+            String apiKey = ExampleUtils.getMoonshotApiKey();
             ReActAgent agent =
                     ReActAgent.builder()
                             .name("PoemAgent")
@@ -139,16 +130,12 @@ public class RoutingByToolCallsExample {
                                     "You're a poet, your target is to generate poems based on the"
                                             + " demand.")
                             .model(
-                                    DashScopeChatModel.builder()
+                                    OpenAIChatModel.builder()
                                             .apiKey(apiKey)
-                                            .modelName("qwen-max")
+                                            .modelName("kimi-k2.5")
+                                            .baseUrl("https://api.moonshot.cn/v1")
                                             .stream(true)
-                                            .enableThinking(true)
-                                            .formatter(new DashScopeChatFormatter())
-                                            .defaultOptions(
-                                                    GenerateOptions.builder()
-                                                            .thinkingBudget(1024)
-                                                            .build())
+                                            .formatter(new OpenAIChatFormatter())
                                             .build())
                             .memory(new InMemoryMemory())
                             .toolkit(new Toolkit())

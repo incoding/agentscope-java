@@ -18,7 +18,8 @@ package io.agentscope.examples.advanced;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.agent.user.UserAgent;
 import io.agentscope.core.message.Msg;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.RAGMode;
 import io.agentscope.core.rag.integration.bailian.BailianConfig;
 import io.agentscope.core.rag.integration.bailian.BailianKnowledge;
@@ -34,7 +35,7 @@ public class BailianRAGExample {
         String accessKeySecret = System.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET");
         String workspaceId = System.getenv("BAILIAN_WORKSPACE_ID");
         String indexId = System.getenv("BAILIAN_INDEX_ID");
-        String apiKey = ExampleUtils.getDashScopeApiKey();
+        String apiKey = ExampleUtils.getMoonshotApiKey();
 
         if (accessKeyId == null
                 || accessKeySecret == null
@@ -53,9 +54,11 @@ public class BailianRAGExample {
                 ReActAgent.builder()
                         .name("KnowledgeAssistant")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-plus")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .knowledge(
                                 BailianKnowledge.builder()

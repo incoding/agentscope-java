@@ -18,9 +18,9 @@ package io.agentscope.examples.advanced;
 import io.agentscope.core.ReActAgent;
 import io.agentscope.core.embedding.EmbeddingModel;
 import io.agentscope.core.embedding.dashscope.DashScopeTextEmbedding;
-import io.agentscope.core.formatter.dashscope.DashScopeChatFormatter;
+import io.agentscope.core.formatter.openai.OpenAIChatFormatter;
 import io.agentscope.core.memory.InMemoryMemory;
-import io.agentscope.core.model.DashScopeChatModel;
+import io.agentscope.core.model.OpenAIChatModel;
 import io.agentscope.core.rag.Knowledge;
 import io.agentscope.core.rag.RAGMode;
 import io.agentscope.core.rag.knowledge.SimpleKnowledge;
@@ -64,8 +64,9 @@ public class ElasticsearchRAGExample {
                         + "  - Indexing documents with dense vectors\n"
                         + "  - Agentic knowledge retrieval backed by ES");
 
-        // Get API key
+        // Get API keys
         String apiKey = ExampleUtils.getDashScopeApiKey();
+        String chatApiKey = ExampleUtils.getMoonshotApiKey();
 
         // 1. Create embedding model
         System.out.println("Creating embedding model...");
@@ -110,7 +111,7 @@ public class ElasticsearchRAGExample {
 
             // 5. Demonstrate Agentic Mode
             System.out.println("\n=== Agentic RAG Mode with Elasticsearch ===");
-            demonstrateAgenticMode(apiKey, knowledge);
+            demonstrateAgenticMode(chatApiKey, knowledge);
 
         } catch (Exception e) {
             log.error("Error running Elasticsearch RAG Example", e);
@@ -182,12 +183,12 @@ public class ElasticsearchRAGExample {
                                     + " retrieve_knowledge tool to find the answer in the database."
                                     + " Always cite your source if possible.")
                         .model(
-                                DashScopeChatModel.builder()
+                                OpenAIChatModel.builder()
                                         .apiKey(apiKey)
-                                        .modelName("qwen-max")
+                                        .modelName("kimi-k2.5")
+                                        .baseUrl("https://api.moonshot.cn/v1")
                                         .stream(true)
-                                        .enableThinking(false)
-                                        .formatter(new DashScopeChatFormatter())
+                                        .formatter(new OpenAIChatFormatter())
                                         .build())
                         .toolkit(new Toolkit())
                         .memory(new InMemoryMemory())
