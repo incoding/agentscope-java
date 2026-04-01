@@ -21,8 +21,8 @@
         </encoder>
     </appender>
 
-    <logger name="io.agentscope" level="DEBUG"/>
-    <logger name="io.agentscope.examples.plannotebook" level="DEBUG"/>
+    <logger name="io.agentscope" level="info"/>
+    <logger name="io.agentscope.examples.plannotebook" level="info"/>
 
     <!-- Reduce noise from frameworks -->
     <logger name="org.springframework" level="INFO"/>
