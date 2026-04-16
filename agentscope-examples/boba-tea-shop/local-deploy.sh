@@ -59,6 +59,7 @@ export MODEL_PROVIDER="${MODEL_PROVIDER:-dashscope}"  # dashscope or openai
 export MODEL_API_KEY="${MODEL_API_KEY:-}"             # ⚠️ Required
 export MODEL_NAME="${MODEL_NAME:-qwen-max}"
 export MODEL_BASE_URL="${MODEL_BASE_URL:-}"           # For OpenAI-compatible API
+export MODEL_STREAM_ENABLED="${MODEL_STREAM_ENABLED:-true}"
 
 # ------------ DashScope RAG Configuration ------------
 export DASHSCOPE_ACCESS_KEY_ID="${DASHSCOPE_ACCESS_KEY_ID:-}"           # ⚠️ Required
@@ -122,23 +123,23 @@ check_required_env() {
     fi
     
     if [ -z "${DASHSCOPE_ACCESS_KEY_ID}" ]; then
-        missing+=("DASHSCOPE_ACCESS_KEY_ID")
+        print_warn "DASHSCOPE_ACCESS_KEY_ID not set, RAG features will be disabled"
     fi
-    
+
     if [ -z "${DASHSCOPE_ACCESS_KEY_SECRET}" ]; then
-        missing+=("DASHSCOPE_ACCESS_KEY_SECRET")
+        print_warn "DASHSCOPE_ACCESS_KEY_SECRET not set, RAG features will be disabled"
     fi
-    
+
     if [ -z "${DASHSCOPE_WORKSPACE_ID}" ]; then
-        missing+=("DASHSCOPE_WORKSPACE_ID")
+        print_warn "DASHSCOPE_WORKSPACE_ID not set, RAG features will be disabled"
     fi
-    
+
     if [ -z "${DASHSCOPE_INDEX_ID}" ]; then
-        missing+=("DASHSCOPE_INDEX_ID")
+        print_warn "DASHSCOPE_INDEX_ID not set, RAG features will be disabled"
     fi
-    
+
     if [ -z "${MEM0_API_KEY}" ]; then
-        missing+=("MEM0_API_KEY")
+        print_warn "MEM0_API_KEY not set, memory features will be disabled"
     fi
     
     if [ ${#missing[@]} -gt 0 ]; then
@@ -256,7 +257,7 @@ build_maven() {
     
     # Build all submodules from boba-tea-shop directory
     print_info "Building all submodules..."
-    mvn clean package -DskipTests
+    mvn clean package -DskipTests -Dmaven.javadoc.skip=true -Dgpg.skip=true
     
     # Verify JAR files are generated
     local all_jars_found=true
@@ -310,6 +311,7 @@ start_java_service() {
     java_opts="${java_opts} -DMODEL_API_KEY=${MODEL_API_KEY}"
     java_opts="${java_opts} -DMODEL_NAME=${MODEL_NAME}"
     [ -n "${MODEL_BASE_URL}" ] && java_opts="${java_opts} -DMODEL_BASE_URL=${MODEL_BASE_URL}"
+    java_opts="${java_opts} -DMODEL_STREAM_ENABLED=${MODEL_STREAM_ENABLED}"
     java_opts="${java_opts} -DDASHSCOPE_ACCESS_KEY_ID=${DASHSCOPE_ACCESS_KEY_ID}"
     java_opts="${java_opts} -DDASHSCOPE_ACCESS_KEY_SECRET=${DASHSCOPE_ACCESS_KEY_SECRET}"
     java_opts="${java_opts} -DDASHSCOPE_WORKSPACE_ID=${DASHSCOPE_WORKSPACE_ID}"

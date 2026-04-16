@@ -58,6 +58,10 @@ export MODEL_NAME=qwen-max
 # Model base URL (optional, configure when using OpenAI compatible interface)
 # export MODEL_BASE_URL=https://api.openai.com/v1
 
+# Enable streaming response (optional)
+# Set to false if OpenAI-compatible providers fail during SSE/TLS handshake
+# export MODEL_STREAM_ENABLED=false
+
 # ============================================================================
 # Bailian Knowledge Base Configuration (RAG - ⚠️ Required)
 # ============================================================================

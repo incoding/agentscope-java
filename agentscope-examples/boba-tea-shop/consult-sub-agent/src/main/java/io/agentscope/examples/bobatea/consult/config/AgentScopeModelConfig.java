@@ -41,6 +41,9 @@ public class AgentScopeModelConfig {
     @Value("${agentscope.model.provider}")
     private String modelProvider;
 
+    @Value("${agentscope.model.stream-enabled:false}")
+    private boolean streamEnabled;
+
     @Value("${agentscope.dashscope.api-key}")
     private String dashscopeApiKey;
 
@@ -63,14 +66,15 @@ public class AgentScopeModelConfig {
     public Model model() {
         if (PROVIDER_OPENAI.equalsIgnoreCase(modelProvider)) {
             logger.info(
-                    "Creating OpenAI Model with model: {}, baseUrl: {}",
+                    "Creating OpenAI Model with model: {}, baseUrl: {}, streamEnabled: {}",
                     openaiModelName,
-                    openaiBaseUrl);
+                    openaiBaseUrl,
+                    streamEnabled);
             OpenAIChatModel.Builder builder =
                     OpenAIChatModel.builder()
                             .apiKey(openaiApiKey)
                             .modelName(openaiModelName)
-                            .stream(true)
+                            .stream(streamEnabled)
                             .formatter(new OpenAIChatFormatter());
             if (openaiBaseUrl != null && !openaiBaseUrl.isEmpty() && !openaiBaseUrl.equals("-")) {
                 builder.baseUrl(openaiBaseUrl);

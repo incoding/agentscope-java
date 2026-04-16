@@ -108,12 +108,19 @@ public class AgentScopeRunner {
 
         private ReActAgent buildReActAgent(String userId) {
             initializeMcpOnce();
+            String mem0ApiKey = System.getenv("MEM0_API_KEY");
+            if (mem0ApiKey == null
+                    || mem0ApiKey.isBlank()
+                    || "your_mem0_api_key_here".equals(mem0ApiKey)) {
+                logger.info("MEM0_API_KEY not configured, long-term memory disabled.");
+                return agentBuilder.build();
+            }
             Mem0LongTermMemory longTermMemory =
                     Mem0LongTermMemory.builder()
                             .agentName("BusinessAgent")
                             .userId(userId)
                             .apiBaseUrl("https://api.mem0.ai")
-                            .apiKey(System.getenv("MEM0_API_KEY"))
+                            .apiKey(mem0ApiKey)
                             .build();
             return agentBuilder.longTermMemory(longTermMemory).build();
         }

@@ -86,10 +86,10 @@ services:
     environment:
       - SERVER_PORT=10002
       # Model Configuration
-      - MODEL_PROVIDER=${MODEL_PROVIDER:-dashscope}
+      - MODEL_PROVIDER=${MODEL_PROVIDER:-openai}
       - MODEL_API_KEY=${MODEL_API_KEY}
-      - MODEL_NAME=${MODEL_NAME:-qwen-max}
-      - MODEL_BASE_URL=${MODEL_BASE_URL:-}
+      - MODEL_NAME=${MODEL_NAME:-kimi-k2.5}
+      - MODEL_BASE_URL=${MODEL_BASE_URL:-https://api.moonshot.cn/v1}
       # DashScope RAG Configuration
       - DASHSCOPE_ACCESS_KEY_ID=${DASHSCOPE_ACCESS_KEY_ID}
       - DASHSCOPE_ACCESS_KEY_SECRET=${DASHSCOPE_ACCESS_KEY_SECRET}
@@ -125,10 +125,10 @@ services:
     environment:
       - SERVER_PORT=10005
       # Model Configuration
-      - MODEL_PROVIDER=${MODEL_PROVIDER:-dashscope}
+      - MODEL_PROVIDER=${MODEL_PROVIDER:-openai}
       - MODEL_API_KEY=${MODEL_API_KEY}
-      - MODEL_NAME=${MODEL_NAME:-qwen-max}
-      - MODEL_BASE_URL=${MODEL_BASE_URL:-}
+      - MODEL_NAME=${MODEL_NAME:-kimi-k2.5}
+      - MODEL_BASE_URL=${MODEL_BASE_URL:-https://api.moonshot.cn/v1}
       # DashScope RAG Configuration
       - DASHSCOPE_ACCESS_KEY_ID=${DASHSCOPE_ACCESS_KEY_ID}
       - DASHSCOPE_ACCESS_KEY_SECRET=${DASHSCOPE_ACCESS_KEY_SECRET}
@@ -164,10 +164,10 @@ services:
     environment:
       - SERVER_PORT=10006
       # Model Configuration
-      - MODEL_PROVIDER=${MODEL_PROVIDER:-dashscope}
+      - MODEL_PROVIDER=${MODEL_PROVIDER:-openai}
       - MODEL_API_KEY=${MODEL_API_KEY}
-      - MODEL_NAME=${MODEL_NAME:-qwen-max}
-      - MODEL_BASE_URL=${MODEL_BASE_URL:-}
+      - MODEL_NAME=${MODEL_NAME:-kimi-k2.5}
+      - MODEL_BASE_URL=${MODEL_BASE_URL:-https://api.moonshot.cn/v1}
       # DashScope RAG Configuration
       - DASHSCOPE_ACCESS_KEY_ID=${DASHSCOPE_ACCESS_KEY_ID}
       - DASHSCOPE_ACCESS_KEY_SECRET=${DASHSCOPE_ACCESS_KEY_SECRET}
@@ -203,10 +203,10 @@ services:
     environment:
       - SERVER_PORT=10008
       # Model Configuration
-      - MODEL_PROVIDER=${MODEL_PROVIDER:-dashscope}
+      - MODEL_PROVIDER=${MODEL_PROVIDER:-openai}
       - MODEL_API_KEY=${MODEL_API_KEY}
-      - MODEL_NAME=${MODEL_NAME:-qwen-max}
-      - MODEL_BASE_URL=${MODEL_BASE_URL:-}
+      - MODEL_NAME=${MODEL_NAME:-kimi-k2.5}
+      - MODEL_BASE_URL=${MODEL_BASE_URL:-https://api.moonshot.cn/v1}
       # DashScope RAG Configuration
       - DASHSCOPE_ACCESS_KEY_ID=${DASHSCOPE_ACCESS_KEY_ID}
       - DASHSCOPE_ACCESS_KEY_SECRET=${DASHSCOPE_ACCESS_KEY_SECRET}
